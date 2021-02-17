@@ -6,38 +6,28 @@ class DateCalculator
     public function __construct($begda = '', $endda = '')
     {
 
-        $this->_begda = strtotime($begda);
-        $this->_endda = strtotime($endda);
-        $this->checkDate($this->_begda);
-        $this->checkDate($this->_endda);
+        $this->_begda = new DateTime($begda);
+        $this->_endda = new DateTime($endda);
     }
 
     public function setBegda($begda)
     {
-
-        $this->_begda = strtotime($begda);
-        if (!$this->checkDate($this->_begda)) {
-            throw new Exception('Invalid date');
-        }
+        $this->_begda = new DateTime($begda);
     }
 
     public function setEndda($endda)
     {
-
-        $this->_endda = strtotime($endda);
-        if (!$this->checkDate($this->_endda)) {
-            throw new Exception('Invalid date');
-        }
+        $this->_endda = new DateTime($endda);
     }
 
     public function getbegda()
     {
-        return date("d/m/Y", $this->_begda);
+        return $this->_begda->format('d/m/Y');
     }
 
     public function getEndda()
     {
-        return date("d/m/Y", $this->_endda);
+        return $this->_endda->format('d/m/Y');
     }
 
     private function checkDate($date)
@@ -53,11 +43,8 @@ class DateCalculator
 
     public function diff()
     {
-        //minus 1 to account for begda incomplete day
-        $result = (($this->_endda - $this->_begda) / (60 * 60 * 24)) - 1;
-        //check same date to avoid -1
-        $isSame = $this->_endda === $this->_begda;
-        return $isSame ? 0 : $result*1; //make sure always postive (test case 3)
+        $interval = (int)$this->_begda->diff($this->_endda)->format('%R%a') * 1; // avoid negative (test 3)
+        return $interval ? $interval-1 : 0;// if interval == 0 then the same date (dont take incomplete begda)
     }
 
     public function help()
