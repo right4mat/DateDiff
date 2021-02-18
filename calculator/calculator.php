@@ -1,64 +1,52 @@
 <?php
 class DateCalculator
 {
-    private $_begda, $_endda;
+    private $_begda, $_endda, $_format;
 
-    public function __construct($begda = '', $endda = '')
+    public function __construct($format = 'd/m/Y H:i:s') // set defualt format incase user doesnt
     {
-
-        $this->_begda = strtotime($begda);
-        $this->_endda = strtotime($endda);
-        $this->checkDate($this->_begda);
-        $this->checkDate($this->_endda);
+        $this->_format = $format;
     }
 
-    public function setBegda($begda)
+    public function setBegda($begda):void
     {
-
-        $this->_begda = strtotime($begda);
-        if (!$this->checkDate($this->_begda)) {
-            throw new Exception('Invalid date');
-        }
+        $this->_begda = DateTime::createFromFormat($this->_format, $begda . ' 00:00:00'); // set 00:00:00 else will defualt to current (not good)
+        if (!$this->checkDate($this->_begda))
+            throw new Exception('Invalid beginning date');
     }
 
-    public function setEndda($endda)
+    public function setEndda($endda):void
     {
-
-        $this->_endda = strtotime($endda);
-        if (!$this->checkDate($this->_endda)) {
-            throw new Exception('Invalid date');
-        }
+        $this->_endda = DateTime::createFromFormat($this->_format, $endda . ' 00:00:00'); // set 00:00:00 else will defualt to current (not good)
+        if (!$this->checkDate($this->_endda))
+            throw new Exception('Invalid end date');
     }
 
-    public function getbegda()
+    public function getbegda($format = 'd/m/Y'):string // set defualt format incase user doesnt
     {
-        echo $this->_begda.PHP_EOL;
-        return date("d/m/Y", $this->_begda);
+        return $this->_begda->format($format);
     }
 
-    public function getEndda()
+    public function getEndda($format = 'd/m/Y'):string
     {
-        echo $this->_endda.PHP_EOL;
-        return date("d/m/Y", $this->_endda);
+        return $this->_endda->format($format);
     }
 
     private function checkDate($date)
     {
-        //negtive -1 check to account for old versions (we dont know which php they may use)
-
-        if ($date && ($date !== -1)) {
-            return true;
-        } else {
+        if (!$date) {
             return false;
+        } else {
+            return true;
         }
     }
 
-    public function diff()
+
+    public function diff():int
     {
-        //minus 1 to account for begda incomplete day
-        $result = ($this->_endda - $this->_begda) / (60 * 60 * 24);
-        //check same date to avoid -1
-        $isSame = $this->_endda === $this->_begda;
-        return $isSame ? 0 : abs($result) - 1; //make sure always postive (test case 3)
+
+        $interval = $this->_endda->diff($this->_begda)->days;
+
+        return $interval ? $interval - 1 : 0; // check if failed or 0 (same date), so we dont -1 to remove partial begda day.
     }
 }
