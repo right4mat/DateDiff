@@ -32,11 +32,13 @@ class DateCalculator
 
     public function getbegda()
     {
+        echo $this->_begda.PHP_EOL;
         return date("d/m/Y", $this->_begda);
     }
 
     public function getEndda()
     {
+        echo $this->_endda.PHP_EOL;
         return date("d/m/Y", $this->_endda);
     }
 
@@ -54,14 +56,9 @@ class DateCalculator
     public function diff()
     {
         //minus 1 to account for begda incomplete day
-        $result = (($this->_endda - $this->_begda) / (60 * 60 * 24)) - 1;
+        $result = ($this->_endda - $this->_begda) / (60 * 60 * 24);
         //check same date to avoid -1
         $isSame = $this->_endda === $this->_begda;
-        return $isSame ? 0 : $result*1; //make sure always postive (test case 3)
-    }
-
-    public function help()
-    {
-        return "Flags: -f, -h, -l" . PHP_EOL;
+        return $isSame ? 0 : abs($result) - 1; //make sure always postive (test case 3)
     }
 }
