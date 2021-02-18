@@ -8,26 +8,26 @@ class DateCalculator
         $this->_format = $format;
     }
 
-    public function setBegda($begda)
+    public function setBegda($begda):void
     {
         $this->_begda = DateTime::createFromFormat($this->_format, $begda . ' 00:00:00'); // set 00:00:00 else will defualt to current (not good)
         if (!$this->checkDate($this->_begda))
             throw new Exception('Invalid beginning date');
     }
 
-    public function setEndda($endda)
+    public function setEndda($endda):void
     {
         $this->_endda = DateTime::createFromFormat($this->_format, $endda . ' 00:00:00'); // set 00:00:00 else will defualt to current (not good)
         if (!$this->checkDate($this->_endda))
             throw new Exception('Invalid end date');
     }
 
-    public function getbegda($format = 'd/m/Y') // set defualt format incase user doesnt
+    public function getbegda($format = 'd/m/Y'):string // set defualt format incase user doesnt
     {
         return $this->_begda->format($format);
     }
 
-    public function getEndda($format = 'd/m/Y')
+    public function getEndda($format = 'd/m/Y'):string
     {
         return $this->_endda->format($format);
     }
@@ -42,7 +42,7 @@ class DateCalculator
     }
 
 
-    public function diff()
+    public function diff():int
     {
 
         $interval = $this->_endda->diff($this->_begda)->days;
