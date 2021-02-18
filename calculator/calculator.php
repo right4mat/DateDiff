@@ -12,12 +12,14 @@ class DateCalculator
 
     public function setBegda($begda)
     {
-        $this->_begda = new DateTime($begda);
+        $this->_begda = new DateTime();
+        $this->_begda->setTimestamp(strtotime($begda));
     }
 
     public function setEndda($endda)
     {
-        $this->_endda = new DateTime($endda);
+        $this->_endda = new DateTime();
+        $this->_endda->setTimestamp(strtotime($endda));
     }
 
     public function getbegda()
