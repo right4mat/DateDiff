@@ -3,13 +3,19 @@ require __DIR__ . '/tests/tests.php';
 
 define("BIGSPACE", PHP_EOL . PHP_EOL);
 
-$tests = new RunTests();
+try {
 
-if (!$tests->hasPassed()) {
+    $tests = new RunTests();
 
-    $input = trim(readline("The calculator isnt running as expected. Do you want to proceed? (Y/N): "));
+    if (!$tests->hasPassed()) {
 
-    should_exist($input);
+        $input = trim(readline("The calculator isnt running as expected. Do you want to proceed? (Y/N): "));
+
+        should_exist($input);
+    }
+} catch (Exception $e) {
+
+    exit($e->getMessage());
 }
 
 
@@ -50,7 +56,6 @@ function should_exist($input)
     if ($input === 'Y' || $input === 'y') {
 
         echo BIGSPACE;
-
     } else if ($input === 'N' || $input === 'n') {
 
         exit(BIGSPACE . "Goodbye!" . BIGSPACE);

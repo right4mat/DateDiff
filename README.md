@@ -1,10 +1,14 @@
 # Date Calculator
 
-Date Calculator is a php command line tool for preforming date based calculations.
+Date Calculator is a php command-line tool for preforming date based calculations.
 
 ## Features
 
 - subtraction
+
+## Requirements
+
+- PHP 7.3 or higher (To support PHPUnit 9)
 
 ## Installation
 
@@ -27,3 +31,8 @@ Follow the prompts.
 
 ## How to exit
 Press ctrl-c
+
+## Notes
+
+- Only tested on Ubuntu and Windows. However, should work on all operating systems that can call PHP from the command-line.
+- removing or downgrading PHPUnit will allow older PHP versions (PHP >= 5.3.0) to use this calc.
