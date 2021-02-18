@@ -35,4 +35,4 @@ Press ctrl-c
 ## Notes
 
 - Only tested on Ubuntu and Windows. However, should work on all operating systems that can call PHP from the command-line.
-- removing or downgrading PHPUnit will allow older PHP versions (PHP >= 5.3.0) to use this calc.
+- Removing or downgrading PHPUnit will allow older PHP versions (PHP >= 5.3.0) to use this calc.
