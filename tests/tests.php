@@ -3,6 +3,10 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../calculator/calculator.php';
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestSuite;
+
+
+
 
 final class DateCalculatorTest extends TestCase
 {
@@ -11,7 +15,7 @@ final class DateCalculatorTest extends TestCase
 
         $this->assertTrue(
             method_exists(new DateCalculator(), 'setBegda')
-        );       
+        );
     }
 
     public function testSetEnddaExist(): void
@@ -19,7 +23,7 @@ final class DateCalculatorTest extends TestCase
 
         $this->assertTrue(
             method_exists(new DateCalculator(), 'setEndda')
-        );       
+        );
     }
 
 
@@ -28,7 +32,7 @@ final class DateCalculatorTest extends TestCase
 
         $this->assertTrue(
             method_exists(new DateCalculator(), 'getBegda')
-        );       
+        );
     }
 
 
@@ -37,7 +41,7 @@ final class DateCalculatorTest extends TestCase
 
         $this->assertTrue(
             method_exists(new DateCalculator(), 'getEndda')
-        );       
+        );
     }
 
     public function testDiffExist(): void
@@ -45,7 +49,7 @@ final class DateCalculatorTest extends TestCase
 
         $this->assertTrue(
             method_exists(new DateCalculator(), 'diff')
-        );       
+        );
     }
 
     public function testCheckDateExist(): void
@@ -53,7 +57,7 @@ final class DateCalculatorTest extends TestCase
 
         $this->assertTrue(
             method_exists(new DateCalculator(), 'checkDate')
-        );       
+        );
     }
 
 
@@ -135,3 +139,27 @@ final class DateCalculatorTest extends TestCase
         );
     }
 }
+
+
+class RunTests
+{
+    private $_test, $_results;
+
+    public function __construct() // set defualt format incase user doesnt
+    {
+        $this->_test = new TestSuite('DateCalculatorTest');
+        $this->_results = $this->_test->run();
+    }
+
+    public function getResults()
+    {
+        return $this->_results;
+    }
+
+    public function hasPassed()
+    {
+        return $this->_results->wasSuccessful();
+    }
+};
+
+
